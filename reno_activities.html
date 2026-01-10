@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reno Outdoor Activities Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: #3498db;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: #e74c3c;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #ecf0f1;
+            border-bottom: 3px solid #3498db;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            background: #ecf0f1;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+
+        .nav-tab:hover {
+            background: #d5dbdb;
+        }
+
+        .nav-tab.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid #3498db;
+            background: white;
+            color: #3498db;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .activity-card {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .activity-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .activity-card.winter { border-left-color: #3498db; }
+        .activity-card.spring { border-left-color: #2ecc71; }
+        .activity-card.summer { border-left-color: #f39c12; }
+        .activity-card.year-round { border-left-color: #9b59b6; }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .activity-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .activity-date {
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .activity-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: start;
+        }
+
+        .detail-icon {
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 1.2em;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        .detail-value a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .detail-value a:hover {
+            text-decoration: underline;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .season-badge {
+            display: inline-block;
+            background: #95a5a6;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        th:hover {
+            background: #2980b9;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-tab {
+                font-size: 14px;
+                padding: 12px 10px;
+            }
+
+            .activity-header {
+                flex-direction: column;
+                align-items: start;
+            }
+
+            .activity-date {
+                margin-top: 10px;
+            }
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏔️ Reno Outdoor Activities Guide</h1>
+            <p>Your Complete Guide to Outdoor Adventures in Reno & Lake Tahoe - January 2026</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('cards', this)">Card View</button>
+            <button class="nav-tab" onclick="showTab('table', this)">Table View</button>
+            <button class="nav-tab" onclick="showTab('calendar', this)">By Date</button>
+            <button class="nav-tab" onclick="showTab('categories', this)">By Category</button>
+        </div>
+
+        <div class="content">
+            <div class="loading" id="loadingMessage">Loading activities data...</div>
+            <div class="error" id="errorMessage" style="display: none;"></div>
+
+            <!-- Card View Tab -->
+            <div id="cards" class="tab-content active" style="display: none;">
+                <div class="stats-section" id="statsSection"></div>
+                
+                <div class="search-filter-section">
+                    <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search activities, locations, or categories..." onkeyup="filterActivities()">
+                    
+                    <div class="filter-buttons" id="categoryFilters"></div>
+                    
+                    <div class="filter-buttons" id="seasonFilters"></div>
+                </div>
+
+                <div id="activitiesContainer"></div>
+                <div id="noResults" class="no-results" style="display: none;">No activities found matching your search.</div>
+            </div>
+
+            <!-- Table View Tab -->
+            <div id="table" class="tab-content" style="display: none;">
+                <div class="search-filter-section">
+                    <input type="text" class="search-box" id="searchBoxTable" placeholder="🔍 Search activities..." onkeyup="filterTable()">
+                </div>
+                <div style="overflow-x: auto;">
+                    <table id="activitiesTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable(0)">Date ↕</th>
+                                <th onclick="sortTable(1)">Activity ↕</th>
+                                <th onclick="sortTable(2)">Category ↕</th>
+                                <th onclick="sortTable(3)">Location ↕</th>
+                                <th>Phone</th>
+                                <th>Website</th>
+                                <th onclick="sortTable(6)">Season ↕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- By Date Tab -->
+            <div id="calendar" class="tab-content" style="display: none;">
+                <h2 style="color: #2c3e50; margin-bottom: 20px;">Activities by Date</h2>
+                <div id="calendarView"></div>
+            </div>
+
+            <!-- By Category Tab -->
+            <div id="categories" class="tab-content" style="display: none;">
+                <h2 style="color: #2c3e50; margin-bottom: 20px;">Activities by Category</h2>
+                <div id="categoryView"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Reno Outdoor Activities Guide | Data loaded from reno_outdoor_activities.csv</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">For the latest information, always call ahead before visiting</p>
+        </footer>
+    </div>
+
+    <script>
+        let activitiesData = [];
+        let filteredData = [];
+
+        // Load CSV file
+        async function loadCSV() {
+            try {
+                const csvPath = 'reno_outdoor_activities.csv';
+                const response = await fetch(csvPath);
+                
+                if (!response.ok) {
+                    throw new Error('Could not load CSV file');
+                }
+                
+                const csvText = await response.text();
+                activitiesData = parseCSV(csvText);
+                filteredData = activitiesData;
+                
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('cards').style.display = 'block';
+                
+                // Initialize the page
+                renderStats();
+                renderFilters();
+                renderActivities();
+                renderTable();
+                renderCalendarView();
+                renderCategoryView();
+                
+            } catch (error) {
+                console.error('Error loading CSV:', error);
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = 'Error loading activities data. Please make sure reno_outdoor_activities.csv is in the same folder as this HTML file.';
+            }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+            const data = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                const values = [];
+                let currentValue = '';
+                let insideQuotes = false;
+                
+                for (let char of lines[i]) {
+                    if (char === '"') {
+                        insideQuotes = !insideQuotes;
+                    } else if (char === ',' && !insideQuotes) {
+                        values.push(currentValue.trim());
+                        currentValue = '';
+                    } else {
+                        currentValue += char;
+                    }
+                }
+                values.push(currentValue.trim());
+                
+                const obj = {};
+                for (let j = 0; j < headers.length; j++) {
+                    obj[headers[j]] = values[j] || '';
+                }
+                data.push(obj);
+            }
+            return data;
+        }
+
+        function getSeasonClass(season) {
+            if (season.includes('Winter')) return 'winter';
+            if (season.includes('Summer')) return 'summer';
+            if (season.includes('Spring')) return 'spring';
+            if (season.includes('Year-round')) return 'year-round';
+            return 'spring';
+        }
+
+        function createActivityCard(activity) {
+            const seasonClass = getSeasonClass(activity['Best Season']);
+            const searchText = `${activity['Activity Name']} ${activity.Category} ${activity.Location} ${activity.Description}`.toLowerCase();
+            
+            return `
+                <div class="activity-card ${seasonClass}" data-category="${activity.Category}" data-season="${activity['Best Season']}" data-searchtext="${searchText}">
+                    <div class="activity-header">
+                        <div class="activity-title">${activity['Activity Name']}</div>
+                        <div class="activity-date">${activity.Date}</div>
+                    </div>
+                    <span class="category-badge">${activity.Category}</span>
+                    <span class="season-badge">${activity['Best Season']}</span>
+                    <div class="activity-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div>
+                                <div class="detail-label">Location</div>
+                                <div class="detail-value">${activity.Location}</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">📞</div>
+                            <div>
+                                <div class="detail-label">Phone</div>
+                                <div class="detail-value"><a href="tel:${activity['Phone Number']}">${activity['Phone Number']}</a></div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">🌐</div>
+                            <div>
+                                <div class="detail-label">Website</div>
+                                <div class="detail-value"><a href="http://${activity.Website}" target="_blank">${activity.Website}</a></div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">ℹ️</div>
+                            <div>
+                                <div class="detail-label">Description</div>
+                                <div class="detail-value">${activity.Description}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderStats() {
+            const categories = [...new Set(activitiesData.map(a => a.Category))];
+            const seasons = [...new Set(activitiesData.map(a => a['Best Season']))];
+            const dates = [...new Set(activitiesData.map(a => a.Date))];
+            
+            document.getElementById('statsSection').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${activitiesData.length}</div>
+                    <div class="stat-label">Total Activities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${categories.length}</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${seasons.length}</div>
+                    <div class="stat-label">Seasons</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${dates.length}</div>
+                    <div class="stat-label">Days of Activities</div>
+                </div>
+            `;
+        }
+
+        function renderFilters() {
+            const categories = [...new Set(activitiesData.map(a => a.Category))].sort();
+            const seasons = [...new Set(activitiesData.map(a => a['Best Season']))].sort();
+            
+            document.getElementById('categoryFilters').innerHTML = `
+                <button class="filter-btn active" onclick="filterByCategory('all', this)">All Categories</button>
+                ${categories.map(cat => `<button class="filter-btn" onclick="filterByCategory('${cat}', this)">${cat}</button>`).join('')}
+            `;
+            
+            document.getElementById('seasonFilters').innerHTML = `
+                <button class="filter-btn active" onclick="filterBySeason('all', this)">All Seasons</button>
+                ${seasons.map(season => `<button class="filter-btn" onclick="filterBySeason('${season}', this)">${season}</button>`).join('')}
+            `;
+        }
+
+        function renderActivities() {
+            const container = document.getElementById('activitiesContainer');
+            container.innerHTML = filteredData.map(activity => createActivityCard(activity)).join('');
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = activitiesData.map(activity => `
+                <tr>
+                    <td>${activity.Date}</td>
+                    <td><strong>${activity['Activity Name']}</strong><br><small>${activity.Description}</small></td>
+                    <td><span class="category-badge">${activity.Category}</span></td>
+                    <td>${activity.Location}</td>
+                    <td><a href="tel:${activity['Phone Number']}">${activity['Phone Number']}</a></td>
+                    <td><a href="http://${activity.Website}" target="_blank">${activity.Website}</a></td>
+                    <td><span class="season-badge">${activity['Best Season']}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderCalendarView() {
+            const byDate = {};
+            activitiesData.forEach(activity => {
+                if (!byDate[activity.Date]) {
+                    byDate[activity.Date] = [];
+                }
+                byDate[activity.Date].push(activity);
+            });
+            
+            const sortedDates = Object.keys(byDate).sort((a, b) => new Date(a) - new Date(b));
+            
+            const calendarHtml = sortedDates.map(date => `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #3498db; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #3498db;">
+                        📅 ${new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        <span style="font-size: 0.8em; color: #7f8c8d; margin-left: 10px;">(${byDate[date].length} activities)</span>
+                    </h3>
+                    ${byDate[date].map(activity => createActivityCard(activity)).join('')}
+                </div>
+            `).join('');
+            
+            document.getElementById('calendarView').innerHTML = calendarHtml;
+        }
+
+        function renderCategoryView() {
+            const byCategory = {};
+            activitiesData.forEach(activity => {
+                if (!byCategory[activity.Category]) {
+                    byCategory[activity.Category] = [];
+                }
+                byCategory[activity.Category].push(activity);
+            });
+            
+            const sortedCategories = Object.keys(byCategory).sort();
+            
+            const categoryHtml = sortedCategories.map(category => `
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #e74c3c; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e74c3c;">
+                        🎯 ${category} 
+                        <span style="font-size: 0.8em; color: #7f8c8d; margin-left: 10px;">(${byCategory[category].length} activities)</span>
+                    </h3>
+                    ${byCategory[category].map(activity => createActivityCard(activity)).join('')}
+                </div>
+            `).join('');
+            
+            document.getElementById('categoryView').innerHTML = categoryHtml;
+        }
+
+        function filterActivities() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const cards = document.querySelectorAll('#activitiesContainer .activity-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const searchText = card.getAttribute('data-searchtext');
+                if (searchText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        function filterByCategory(category, btn) {
+            const buttons = document.querySelectorAll('#categoryFilters .filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            
+            if (category === 'all') {
+                filteredData = activitiesData;
+            } else {
+                filteredData = activitiesData.filter(a => a.Category === category);
+            }
+            renderActivities();
+            const sb = document.getElementById('searchBox');
+            if (sb) sb.value = '';
+        }
+
+        function filterBySeason(season, btn) {
+            const buttons = document.querySelectorAll('#seasonFilters .filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            
+            if (season === 'all') {
+                filteredData = activitiesData;
+            } else {
+                filteredData = activitiesData.filter(a => a['Best Season'] === season);
+            }
+            renderActivities();
+            const sb = document.getElementById('searchBox');
+            if (sb) sb.value = '';
+        }
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchBoxTable').value.toLowerCase();
+            const rows = document.querySelectorAll('#tableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById('activitiesTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            rows.sort((a, b) => {
+                const aText = a.cells[columnIndex].textContent.trim();
+                const bText = b.cells[columnIndex].textContent.trim();
+                return aText.localeCompare(bText);
+            });
+            
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        function showTab(tabName, btn) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.nav-tab');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            if (btn) btn.classList.add('active');
+        }
+
+        // Load the data when page loads
+        window.addEventListener('DOMContentLoaded', loadCSV);
+    </script>
+</body>
+</html>
