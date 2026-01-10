@@ -10,19 +10,37 @@ Option A — Quick (GitHub Pages from `docs/`)
 Commands to run locally (PowerShell):
 
 ```powershell
-git add .
-git commit -m "Publish site to docs/ and add GitHub Pages workflow"
-git push origin main
-```
+# Outdoor Activities Guide — Reno, Dublin (CA), Lone Pine (CA)
 
-Option B — Serve locally (quick test)
+A fast, mobile-first static site that converts CSV datasets into beautiful, filterable activity cards with full contact details and one-tap WhatsApp sharing.
 
-```powershell
-cd 'C:\Users\callm\OneDrive\Documents\GitHub\Reno\docs'
+Why you'll love it
+- Clean, scannable card UI ideal for mobile and social sharing.
+- One-click WhatsApp sharing pre-fills the full activity details (date, location, phone, website, description, season).
+- Drop-in data: add new city guides by placing a CSV and a simple HTML page in `docs/`.
+- Works offline / via `file://` using the CSV file-input fallback.
+
+Quick links
+- Index: [docs/index.html](docs/index.html)
+- Reno: [docs/reno_activities.html](docs/reno_activities.html)
+- Dublin, CA: [docs/dublin.html](docs/dublin.html)
+- Lone Pine, CA: [docs/lonepine.html](docs/lonepine.html)
+
+Local preview
+```bash
+cd docs
 python -m http.server 8000
-# open http://localhost:8000/reno_activities.html
+# open http://localhost:8000
 ```
+
+Publish (GitHub Pages)
+1. Push your repository to GitHub.
+2. The repository ships with a Pages workflow that deploys the `docs/` folder. Ensure the workflow has permissions and the Pages source is set appropriately in repository settings.
 
 Notes
-- The workflow expects the branch to be named `main`. If you use a different branch name, update `.github/workflows/pages.yml`.
-- If you prefer auto-deploy to the `gh-pages` branch or a different setup, I can add that workflow instead.
+- To add another city: create `docs/<city>_outdoor_activities.csv` and `docs/<city>.html` using the existing pages as templates.
+- If you want, I can commit and push these files and enable publishing to `gh-pages` for you.
+
+---
+
+If you'd like a shorter tagline or a graphical badge for the README header, tell me the style and I will add it.
