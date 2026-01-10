@@ -18,6 +18,10 @@
         .category-badge { background: linear-gradient(90deg,#ff7e5f,#feb47b); }
         .season-badge { background: linear-gradient(90deg,#6a11cb,#2575fc); }
         .loading, .error, .no-results { text-align:center; padding:20px; }
+        .back-link { display:inline-block; margin-top:8px; padding:6px 10px; border-radius:8px; background: #3498db; color:#fff; text-decoration:none; font-weight:600 }
+        .back-link:hover { opacity:0.95; transform:translateY(-1px); }
+        .share-btn { display:inline-block; padding:6px 10px; border-radius:8px; background: #25D366; color:#fff; text-decoration:none; font-weight:600; margin-left:8px }
+        .share-btn:hover { opacity:0.95; transform:translateY(-1px); }
     </style>
 </head>
 <body>
@@ -25,6 +29,7 @@
         <header>
             <h1>🏜️ Lone Pine, CA Outdoor Activities Guide</h1>
             <p>Explore outdoor activities around Lone Pine — 2026</p>
+            <p><a class="back-link" href="index.html">← Back to Index</a></p>
         </header>
 
         <div class="loading" id="loadingMessage">Loading activities data...</div>
@@ -104,6 +109,8 @@
 
         function createActivityCard(a){
             const searchText = `${a['Activity Name']} ${a.Category} ${a.Location} ${a.Description}`.toLowerCase();
+            const shareText = `${a.Date} - ${a['Activity Name']}\nLocation: ${a.Location}\nPhone: ${a['Phone Number']}\nWebsite: ${a.Website}\n\n${a.Description}\nBest Season: ${a['Best Season']}`;
+            const shareUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
             return `
                 <div class="activity-card" data-search="${searchText}" data-category="${a.Category}" data-season="${a['Best Season']}">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -114,6 +121,7 @@
                         </div>
                     </div>
                     <div style="margin-top:10px; color:#333">${a.Description}</div>
+                    <div style="margin-top:10px; display:flex; justify-content:flex-end;"><a class="share-btn" href="${shareUrl}" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a></div>
                 </div>
             `;
         }

@@ -318,6 +318,12 @@
             text-align: center;
             padding: 20px;
         }
+        .footer-link { color: #fff; background: rgba(255,255,255,0.08); padding:6px 10px; border-radius:6px; text-decoration:none; margin:0 6px; display:inline-block; }
+        .footer-link:hover { background: rgba(255,255,255,0.15); }
+        .top-link { color: #fff; background: rgba(255,255,255,0.12); padding:8px 14px; border-radius:8px; text-decoration:none; margin:0 8px; display:inline-block; font-weight:700 }
+        .top-link:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
+        .share-btn { display:inline-block; padding:6px 10px; border-radius:8px; background: #25D366; color:#fff; text-decoration:none; font-weight:600; margin-left:8px }
+        .share-btn:hover { opacity:0.95; transform:translateY(-1px); }
     </style>
 </head>
 <body>
@@ -325,6 +331,7 @@
         <header>
             <h1>🏔️ Reno Outdoor Activities Guide</h1>
             <p>Your Complete Guide to Outdoor Adventures in Reno & Lake Tahoe - January 2026</p>
+            <p style="margin-top:12px">Explore other guides: <a class="top-link" href="dublin.html">Dublin, CA</a> <a class="top-link" href="lonepine.html">Lone Pine, CA</a></p>
         </header>
 
         <div class="nav-tabs">
@@ -361,6 +368,7 @@
         <footer>
             <p>© 2026 Reno Outdoor Activities Guide </p>
             <p style="margin-top: 10px; font-size: 0.9em;">For the latest information, always call ahead before visiting</p>
+            <p style="margin-top:10px">Explore other guides: <a class="footer-link" href="dublin.html">Dublin, CA</a> <a class="footer-link" href="lonepine.html">Lone Pine, CA</a></p>
         </footer>
     </div>
 
@@ -501,6 +509,8 @@
         function createActivityCard(activity) {
             const seasonClass = getSeasonClass(activity['Best Season']);
             const searchText = `${activity['Activity Name']} ${activity.Category} ${activity.Location} ${activity.Description}`.toLowerCase();
+            const shareText = `${activity.Date} - ${activity['Activity Name']}\nLocation: ${activity.Location}\nPhone: ${activity['Phone Number']}\nWebsite: ${activity.Website}\n\n${activity.Description}\nBest Season: ${activity['Best Season']}`;
+            const shareUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
             
             return `
                 <div class="activity-card ${seasonClass}" data-category="${activity.Category}" data-season="${activity['Best Season']}" data-searchtext="${searchText}">
@@ -539,6 +549,9 @@
                                 <div class="detail-value">${activity.Description}</div>
                             </div>
                         </div>
+                    </div>
+                    <div style="margin-top:12px; display:flex; justify-content:flex-end; gap:8px">
+                        <a class="share-btn" href="${shareUrl}" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>
                     </div>
                 </div>
             `;
