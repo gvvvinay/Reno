@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Outdoor Activity Guides</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,47 +16,182 @@
         </header>
 
         <div class="content">
-            <main>
-                <ul class="guide-list" style="list-style:none; padding:0; margin:0;">
-                    <li>
-                        <img class="guide-thumb" src="images/reno.svg" alt="Reno banner">
-                        <a class="guide-link" href="reno.html">Reno, NV — Full Activities Guide</a>
-                    </li>
-                    <li>
-                        <img class="guide-thumb" src="images/dublin.svg" alt="Dublin banner">
-                        <a class="guide-link" href="dublin.html">Dublin, CA — Activities Guide</a>
-                    </li>
-                    <li>
-                        <img class="guide-thumb" src="images/lonepine.svg" alt="Lone Pine banner">
-                        <a class="guide-link" href="lonepine.html">Lone Pine, CA — Activities Guide</a>
-                    </li>
-                    <li>
-                        <img class="guide-thumb" src="images/bangalore.svg" alt="Bangalore banner">
-                        <a class="guide-link" href="bangalore.html">Bangalore, India — Activities Guide</a>
-                    </li>
-                    <li>
-                        <img class="guide-thumb" src="images/kakinada.svg" alt="Kakinada banner">
-                        <a class="guide-link" href="kakinada.html">Kakinada, India — Activities Guide</a>
-                    </li>
-                    <li>
-                        <img class="guide-thumb" src="images/hyderabad.svg" alt="Hyderabad banner">
-                        <a class="guide-link" href="hyderabad.html">Hyderabad, India — Activities Guide</a>
-                    </li>
-                    <li>
-                        <img class="guide-thumb" src="images/delhi.svg" alt="Delhi banner">
-                        <a class="guide-link" href="delhi.html">Delhi, India — Activities Guide</a>
-                    </li>
-                    <li>
-                        <img class="guide-thumb" src="images/vizag.svg" alt="Vizag banner">
-                        <a class="guide-link" href="vizag.html">Vizag, India — Activities Guide</a>
-                    </li>
-                </ul>
+            <div style="display:flex; gap:20px; align-items:flex-start;">
+                <!-- Interactive Map Section -->
+                <section class="map-section" style="flex:2; min-width:0;">
+                    <h2 style="text-align:center; margin-bottom:20px; color:#2c3e50">Our Global Guides</h2>
+                    <div id="worldMap" style="height:600px; border-radius:8px;"></div>
+                </section>
+
+                <!-- Country Dropdowns -->
+                <main style="flex:1; min-width:300px; max-width:400px;">
+                <details id="usDetails" style="margin-bottom:25px; border:1px solid #ddd; border-radius:8px; padding:15px;">
+                    <summary style="cursor:pointer; font-weight:700; font-size:1.2em; color:#2c3e50; margin-bottom:15px;">🇺🇸 United States (14 locations)</summary>
+                    <ul class="guide-list" style="list-style:none; padding:0; margin:0;">
+                        <li><img class="guide-thumb" src="images/reno.svg" alt="Reno banner"><a class="guide-link" href="reno.html">Reno, NV — Full Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/dublin.svg" alt="Dublin banner"><a class="guide-link" href="dublin.html">Dublin, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/lonepine.svg" alt="Lone Pine banner"><a class="guide-link" href="lonepine.html">Lone Pine, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/mammothlakes.svg" alt="Mammoth Lakes banner"><a class="guide-link" href="mammothlakes.html">Mammoth Lakes, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/yosemite.svg" alt="Yosemite banner"><a class="guide-link" href="yosemite.html">Yosemite, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/junelakeloop.svg" alt="June Lake Loop banner"><a class="guide-link" href="junelakeloop.html">June Lake Loop, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/bishop.svg" alt="Bishop banner"><a class="guide-link" href="bishop.html">Bishop, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/laketahoe.svg" alt="Lake Tahoe banner"><a class="guide-link" href="laketahoe.html">Lake Tahoe, CA/NV — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/alpinelake.svg" alt="Alpine Lake banner"><a class="guide-link" href="alpinelake.html">Alpine Lake (Hwy 4), CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/sacramento.svg" alt="Sacramento banner"><a class="guide-link" href="sacramento.html">Sacramento, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/mtshasta.svg" alt="Mt. Shasta banner"><a class="guide-link" href="mtshasta.html">Mt. Shasta, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/lasvegas.svg" alt="Las Vegas banner"><a class="guide-link" href="lasvegas.html">Las Vegas, NV — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/losangeles.svg" alt="Los Angeles banner"><a class="guide-link" href="losangeles.html">Los Angeles, CA — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/pointreyes.svg" alt="Point Reyes banner"><a class="guide-link" href="pointreyes.html">Point Reyes, CA — Activities Guide</a></li>
+                    </ul>
+                </details>
+
+                <details id="indiaDetails" style="margin-bottom:25px; border:1px solid #ddd; border-radius:8px; padding:15px;">
+                    <summary style="cursor:pointer; font-weight:700; font-size:1.2em; color:#2c3e50; margin-bottom:15px;">🇮🇳 India (5 locations)</summary>
+                    <ul class="guide-list" style="list-style:none; padding:0; margin:0;">
+                        <li><img class="guide-thumb" src="images/bangalore.svg" alt="Bangalore banner"><a class="guide-link" href="bangalore.html">Bangalore, India — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/kakinada.svg" alt="Kakinada banner"><a class="guide-link" href="kakinada.html">Kakinada, India — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/hyderabad.svg" alt="Hyderabad banner"><a class="guide-link" href="hyderabad.html">Hyderabad, India — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/delhi.svg" alt="Delhi banner"><a class="guide-link" href="delhi.html">Delhi, India — Activities Guide</a></li>
+                        <li><img class="guide-thumb" src="images/vizag.svg" alt="Vizag banner"><a class="guide-link" href="vizag.html">Vizag, India — Activities Guide</a></li>
+                    </ul>
+                </details>
             </main>
+            </div>
         </div>
 
         <footer>
             <p>© 2026 Reno Outdoor Activities Guide</p>
         </footer>
     </div>
+
+    <script>
+        // Initialize Leaflet map
+        const map = L.map('worldMap').setView([20, 20], 2);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18
+        }).addTo(map);
+        
+        // City data with coordinates
+        const cities = [
+            { name: 'Reno, NV', lat: 39.5296, lon: -119.8138, page: 'reno.html', color: '#ff4444' },
+            { name: 'Dublin, CA', lat: 37.7022, lon: -121.9358, page: 'dublin.html', color: '#ff6b6b' },
+            { name: 'Lone Pine, CA', lat: 36.6060, lon: -118.0634, page: 'lonepine.html', color: '#ff8787' },
+            { name: 'Mammoth Lakes, CA', lat: 37.6485, lon: -118.9721, page: 'mammothlakes.html', color: '#ff9a9a' },
+            { name: 'Yosemite, CA', lat: 37.8651, lon: -119.5383, page: 'yosemite.html', color: '#ffadad' },
+            { name: 'June Lake Loop, CA', lat: 37.7806, lon: -119.0757, page: 'junelakeloop.html', color: '#ffc0c0' },
+            { name: 'Bishop, CA', lat: 37.3636, lon: -118.3951, page: 'bishop.html', color: '#ffd3d3' },
+            { name: 'Lake Tahoe, CA/NV', lat: 39.0968, lon: -120.0324, page: 'laketahoe.html', color: '#ffe0e0' },
+            { name: 'Alpine Lake (Hwy 4), CA', lat: 38.4694, lon: -120.0106, page: 'alpinelake.html', color: '#fff0f0' },
+            { name: 'Sacramento, CA', lat: 38.5816, lon: -121.4944, page: 'sacramento.html', color: '#fff6e0' },
+            { name: 'Mt. Shasta, CA', lat: 41.3099, lon: -122.3106, page: 'mtshasta.html', color: '#e6f7ff' },
+            { name: 'Las Vegas, NV', lat: 36.1699, lon: -115.1398, page: 'lasvegas.html', color: '#ffe8ff' },
+            { name: 'Los Angeles, CA', lat: 34.0522, lon: -118.2437, page: 'losangeles.html', color: '#ffdfe6' },
+            { name: 'Point Reyes, CA', lat: 38.0692, lon: -122.9381, page: 'pointreyes.html', color: '#e0fff4' },
+            { name: 'Delhi, India', lat: 28.7041, lon: 77.1025, page: 'delhi.html', color: '#4444ff' },
+            { name: 'Hyderabad, India', lat: 17.3850, lon: 78.4867, page: 'hyderabad.html', color: '#6b6bff' },
+            { name: 'Bangalore, India', lat: 12.9716, lon: 77.5946, page: 'bangalore.html', color: '#8787ff' },
+            { name: 'Kakinada, India', lat: 16.9891, lon: 82.2475, page: 'kakinada.html', color: '#a3a3ff' },
+            { name: 'Vizag, India', lat: 17.6868, lon: 83.2185, page: 'vizag.html', color: '#bfbfff' }
+        ];
+        
+        // Store markers with tooltips
+        const cityMarkers = {};
+        
+        // Add markers for each city
+        cities.forEach(city => {
+            const marker = L.circleMarker([city.lat, city.lon], {
+                radius: 10,
+                fillColor: city.color,
+                color: '#fff',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(map);
+            
+            // Create tooltip for each marker
+            const tooltip = L.tooltip({
+                permanent: false,
+                direction: 'top',
+                className: 'city-label',
+                offset: [0, -10]
+            }).setContent(city.name);
+            marker.bindTooltip(tooltip);
+            
+            marker.bindPopup(`<strong>${city.name}</strong><br><a href="${city.page}" style="color:#3498db">View Activities Guide →</a>`);
+            
+            marker.on('click', () => {
+                window.location.href = city.page;
+            });
+            
+            marker.on('mouseover', function() {
+                this.setStyle({
+                    radius: 12,
+                    fillColor: '#ffd700'
+                });
+            });
+            
+            marker.on('mouseout', function() {
+                this.setStyle({
+                    radius: 10,
+                    fillColor: city.color
+                });
+            });
+            
+            cityMarkers[city.name] = marker;
+        });
+        
+        // Handle US dropdown
+        const usDetails = document.getElementById('usDetails');
+        usDetails.addEventListener('toggle', function() {
+            if (this.open) {
+                // Zoom to US (centered on California/Nevada)
+                map.setView([37.5, -119.5], 6);
+                
+                // Show labels for US cities
+                cities.forEach(city => {
+                    if (!city.name.includes('India')) {
+                        cityMarkers[city.name].getTooltip().setLatLng([city.lat, city.lon]);
+                        cityMarkers[city.name].openTooltip();
+                    }
+                });
+            } else {
+                // Reset to world view
+                map.setView([20, 20], 2);
+                
+                // Hide all labels
+                cities.forEach(city => {
+                    cityMarkers[city.name].closeTooltip();
+                });
+            }
+        });
+        
+        // Handle India dropdown
+        const indiaDetails = document.getElementById('indiaDetails');
+        indiaDetails.addEventListener('toggle', function() {
+            if (this.open) {
+                // Zoom to India
+                map.setView([20, 78.5], 5);
+                
+                // Show labels for India cities
+                cities.forEach(city => {
+                    if (city.name.includes('India')) {
+                        cityMarkers[city.name].getTooltip().setLatLng([city.lat, city.lon]);
+                        cityMarkers[city.name].openTooltip();
+                    }
+                });
+            } else {
+                // Reset to world view
+                map.setView([20, 20], 2);
+                
+                // Hide all labels
+                cities.forEach(city => {
+                    cityMarkers[city.name].closeTooltip();
+                });
+            }
+        });
+    </script>
 </body>
 </html>

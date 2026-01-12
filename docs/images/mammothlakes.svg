@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320">
+  <defs>
+    <linearGradient id="ml-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5f5fff"/>
+      <stop offset="1" stop-color="#7cd7ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#ml-bg)"/>
+  <circle cx="600" cy="160" r="90" fill="#fff" opacity="0.95"/>
+  <path d="M520 205 L570 135 L605 175 L640 120 L690 205 Z" fill="none" stroke="#5f5fff" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M555 175 L570 155 L585 175" fill="none" stroke="#7cd7ff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M625 165 L640 145 L655 165" fill="none" stroke="#7cd7ff" stroke-width="5" stroke-linecap="round"/>
+  <text x="600" y="175" font-family="Arial,sans-serif" font-size="58" font-weight="bold" fill="#5f5fff" text-anchor="middle">ML</text>
+  <text x="600" y="270" font-family="Arial,sans-serif" font-size="32" font-weight="600" fill="#fff" text-anchor="middle">Mammoth Lakes, CA</text>
+</svg>

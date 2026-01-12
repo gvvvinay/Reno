@@ -155,3 +155,7 @@ footer { background:#2c3e50; color:white; text-align:center; padding:20px }
 /* Page banner for city pages */
 .page-banner { width:100%; height:400px; overflow:hidden; border-bottom:1px solid #eee; display:flex; align-items:center; justify-content:center; background:#f8f9fa }
 .page-banner img { width:100%; height:100%; object-fit:contain; display:block }
+
+/* Map section */
+.map-section { margin-bottom:40px; padding:20px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08) }
+#worldMap { width:100%; height:500px; border-radius:8px; z-index:1 }

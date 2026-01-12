@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320">
+  <defs>
+    <linearGradient id="lt-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#009ffd"/>
+      <stop offset="1" stop-color="#2a2a72"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#lt-bg)"/>
+  <circle cx="600" cy="160" r="90" fill="#fff" opacity="0.95"/>
+  <path d="M540 190 Q600 140 660 190" fill="none" stroke="#009ffd" stroke-width="7" stroke-linecap="round"/>
+  <path d="M555 200 Q600 160 645 200" fill="none" stroke="#2a9df4" stroke-width="6" stroke-linecap="round"/>
+  <path d="M560 205 Q600 185 640 205" fill="none" stroke="#2a2a72" stroke-width="5" stroke-linecap="round"/>
+  <text x="600" y="175" font-family="Arial,sans-serif" font-size="54" font-weight="bold" fill="#2a2a72" text-anchor="middle">LT</text>
+  <text x="600" y="270" font-family="Arial,sans-serif" font-size="32" font-weight="600" fill="#fff" text-anchor="middle">Lake Tahoe, CA/NV</text>
+</svg>

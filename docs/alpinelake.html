@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine Lake (Hwy 4), CA Outdoor Activities Guide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📍 Alpine Lake (Hwy 4), CA Outdoor Activities Guide</h1>
+            <p>Explore outdoor activities around Alpine Lake on Highway 4 — Spring 2026</p>
+            <p><a class="back-link" href="index.html">← Back to Index</a></p>
+        </header>
+
+        <div class="content">
+        <div class="loading" id="loadingMessage">Loading activities data...</div>
+        <div class="error" id="errorMessage" style="display:none;"></div>
+        <div id="fileLoader" style="display:none; text-align:center; padding:10px;">
+            <p style="color:#666">If automatic loading fails, select the CSV file manually:</p>
+            <input type="file" id="csvFileInput" accept=".csv" />
+        </div>
+
+        <div id="cards" style="display:none;">
+            <div class="stats-section" id="statsSection" style="margin-bottom:15px"></div>
+            <input type="text" id="searchBox" class="search-box" placeholder="🔍 Search activities, locations, or categories..." onkeyup="filterActivities()">
+            <div class="filter-buttons" id="categoryFilters"></div>
+            <div class="filter-buttons" id="seasonFilters"></div>
+            <div id="activitiesContainer"></div>
+            <div id="noResults" class="no-results" style="display:none;">No activities found.</div>
+        </div>
+
+        </div>
+        <footer style="text-align:center; margin-top:20px; color:#666">
+            <p>© 2026 Alpine Lake Outdoor Activities Guide</p>
+        </footer>
+    </div>
+
+    <script>
+        let activitiesData = [];
+        let filteredData = [];
+
+        async function loadCSV() {
+            try {
+                const csvPath = 'alpinelake_outdoor_activities.csv';
+                const response = await fetch(csvPath);
+                if (!response.ok) throw new Error('Could not load CSV');
+                const csvText = await response.text();
+                activitiesData = parseCSV(csvText);
+                filteredData = activitiesData;
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('cards').style.display = 'block';
+                renderStats();
+                renderFilters();
+                renderActivities();
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = 'Error loading activities data. You can select the CSV file manually below.';
+                document.getElementById('fileLoader').style.display = 'block';
+            }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n').filter(l => l.trim() !== '');
+            if (lines.length === 0) return [];
+            let headers = lines[0].split(',').map(h => h.trim());
+            while (headers.length > 0 && headers[headers.length-1] === '') headers.pop();
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i];
+                const values = [];
+                let current = '';
+                let insideQuotes = false;
+                for (let k=0;k<line.length;k++){
+                    const ch = line[k];
+                    if (ch === '"') { if (insideQuotes && line[k+1] === '"') { current += '"'; k++; } else insideQuotes = !insideQuotes; }
+                    else if (ch === ',' && !insideQuotes) { values.push(current.trim()); current = ''; }
+                    else { current += ch; }
+                }
+                values.push(current.trim());
+                if (values.length > headers.length) values.length = headers.length; while (values.length < headers.length) values.push('');
+                const obj = {};
+                for (let j=0;j<headers.length;j++) obj[headers[j]] = values[j] || '';
+                data.push(obj);
+            }
+            return data;
+        }
+
+        function createActivityCard(a){
+            const searchText = `${a['Activity Name']} ${a.Category} ${a.Location} ${a.Description}`.toLowerCase();
+            const shareText = `${a.Date} - ${a['Activity Name']}\nLocation: ${a.Location}\nPhone: ${a['Phone Number']}\nWebsite: ${a.Website}\n\n${a.Description}\nBest Season: ${a['Best Season']}`;
+            const shareUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+            return `
+                <div class="activity-card animate-in" data-search="${searchText}" data-category="${a.Category}" data-season="${a['Best Season']}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div style="min-width:60%"><div style="font-weight:700">${a['Activity Name']}</div><div style="color:#666; font-size:0.95em;">${a.Location}</div></div>
+                        <div style="text-align:right">
+                            <div><span class="category-badge">${a.Category}</span><span class="season-badge">${a['Best Season']}</span></div>
+                            <div style="margin-top:8px; font-size:0.9em"><a href="tel:${a['Phone Number']}">${a['Phone Number']}</a> • <a href="http://${a.Website}" target="_blank">Website</a></div>
+                        </div>
+                    </div>
+                    <div style="margin-top:10px; color:#333">${a.Description}</div>
+                    <div style="margin-top:10px; display:flex; justify-content:flex-end;"><a class="share-btn" href="${shareUrl}" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a></div>
+                </div>
+            `;
+        }
+
+        function renderStats() {
+            const categories = [...new Set(activitiesData.map(a => a.Category))];
+            const seasons = [...new Set(activitiesData.map(a => a['Best Season']))];
+            const dates = [...new Set(activitiesData.map(a => a.Date))];
+            document.getElementById('statsSection').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${activitiesData.length}</div>
+                    <div class="stat-label">Total Activities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${categories.length}</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${seasons.length}</div>
+                    <div class="stat-label">Seasons</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${dates.length}</div>
+                    <div class="stat-label">Days of Activities</div>
+                </div>
+            `;
+        }
+
+        function renderFilters() {
+            const categories = [...new Set(activitiesData.map(a => a.Category))].sort();
+            const seasons = [...new Set(activitiesData.map(a => a['Best Season']))].sort();
+            document.getElementById('categoryFilters').innerHTML = `<button class="filter-btn active" onclick="filterByCategory('all', this)">All Categories</button>` + categories.map(c=>`<button class="filter-btn" onclick="filterByCategory('${c}', this)">${c}</button>`).join('');
+            document.getElementById('seasonFilters').innerHTML = `<button class="filter-btn active" onclick="filterBySeason('all', this)">All Seasons</button>` + seasons.map(s=>`<button class="filter-btn" onclick="filterBySeason('${s}', this)">${s}</button>`).join('');
+
+            const catBtns = document.querySelectorAll('#categoryFilters .filter-btn');
+            catBtns.forEach((b,i)=>{ b.classList.remove('animate-in'); setTimeout(()=>b.classList.add('animate-in'), i*60); });
+            const seasonBtns = document.querySelectorAll('#seasonFilters .filter-btn');
+            seasonBtns.forEach((b,i)=>{ b.classList.remove('animate-in'); setTimeout(()=>b.classList.add('animate-in'), (catBtns.length*60) + i*60); });
+        }
+
+        function filterByCategory(category, btn) {
+            const buttons = document.querySelectorAll('#categoryFilters .filter-btn');
+            buttons.forEach(b=>b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            if (category === 'all') filteredData = activitiesData; else filteredData = activitiesData.filter(a=>a.Category===category);
+            renderActivities();
+            document.getElementById('searchBox').value='';
+        }
+
+        function filterBySeason(season, btn) {
+            const buttons = document.querySelectorAll('#seasonFilters .filter-btn');
+            buttons.forEach(b=>b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            if (season === 'all') filteredData = activitiesData; else filteredData = activitiesData.filter(a=>a['Best Season']===season);
+            renderActivities();
+            document.getElementById('searchBox').value='';
+        }
+
+        function renderActivities(){
+            const container = document.getElementById('activitiesContainer');
+            container.innerHTML = filteredData.map(createActivityCard).join('');
+        }
+
+        function filterActivities(){
+            const term = document.getElementById('searchBox').value.toLowerCase();
+            const cards = document.querySelectorAll('#activitiesContainer .activity-card');
+            let visible = 0;
+            cards.forEach(c=>{ const s=c.getAttribute('data-search'); if(s.includes(term)){ c.style.display='block'; visible++; } else c.style.display='none'; });
+            document.getElementById('noResults').style.display = visible===0 ? 'block':'none';
+        }
+
+        document.getElementById('csvFileInput').addEventListener('change', function(e){ const f = e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=function(ev){ activitiesData=parseCSV(ev.target.result); filteredData=activitiesData; document.getElementById('errorMessage').style.display='none'; document.getElementById('fileLoader').style.display='none'; document.getElementById('cards').style.display='block'; renderActivities(); }; r.readAsText(f); });
+
+        window.addEventListener('DOMContentLoaded', loadCSV);
+    </script>
+</body>
+</html>
