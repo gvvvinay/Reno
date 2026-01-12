@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Outdoor Activity Guides</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -25,34 +25,37 @@
 
                 <!-- Country Dropdowns -->
                 <main style="flex:1; min-width:300px; max-width:400px;">
-                <details id="usDetails" style="margin-bottom:25px; border:1px solid #ddd; border-radius:8px; padding:15px;">
-                    <summary style="cursor:pointer; font-weight:700; font-size:1.2em; color:#2c3e50; margin-bottom:15px;">🇺🇸 United States (14 locations)</summary>
+                <details id="usDetails" class="country-dropdown">
+                    <summary class="country-summary">🇺🇸 United States (17 locations)</summary>
                     <ul class="guide-list" style="list-style:none; padding:0; margin:0;">
-                        <li><img class="guide-thumb" src="images/reno.svg" alt="Reno banner"><a class="guide-link" href="reno.html">Reno, NV — Full Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/dublin.svg" alt="Dublin banner"><a class="guide-link" href="dublin.html">Dublin, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/lonepine.svg" alt="Lone Pine banner"><a class="guide-link" href="lonepine.html">Lone Pine, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/mammothlakes.svg" alt="Mammoth Lakes banner"><a class="guide-link" href="mammothlakes.html">Mammoth Lakes, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/yosemite.svg" alt="Yosemite banner"><a class="guide-link" href="yosemite.html">Yosemite, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/junelakeloop.svg" alt="June Lake Loop banner"><a class="guide-link" href="junelakeloop.html">June Lake Loop, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/bishop.svg" alt="Bishop banner"><a class="guide-link" href="bishop.html">Bishop, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/laketahoe.svg" alt="Lake Tahoe banner"><a class="guide-link" href="laketahoe.html">Lake Tahoe, CA/NV — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/alpinelake.svg" alt="Alpine Lake banner"><a class="guide-link" href="alpinelake.html">Alpine Lake (Hwy 4), CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/sacramento.svg" alt="Sacramento banner"><a class="guide-link" href="sacramento.html">Sacramento, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/mtshasta.svg" alt="Mt. Shasta banner"><a class="guide-link" href="mtshasta.html">Mt. Shasta, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/lasvegas.svg" alt="Las Vegas banner"><a class="guide-link" href="lasvegas.html">Las Vegas, NV — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/losangeles.svg" alt="Los Angeles banner"><a class="guide-link" href="losangeles.html">Los Angeles, CA — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/pointreyes.svg" alt="Point Reyes banner"><a class="guide-link" href="pointreyes.html">Point Reyes, CA — Activities Guide</a></li>
+                        <li><a href="reno.html"><img class="guide-thumb" src="images/reno.svg" alt="Reno banner"></a><a class="guide-link" href="reno.html">Reno, NV — Full Activities Guide</a></li>
+                        <li><a href="dublin.html"><img class="guide-thumb" src="images/dublin.svg" alt="Dublin banner"></a><a class="guide-link" href="dublin.html">Dublin, CA — Activities Guide</a></li>
+                        <li><a href="lonepine.html"><img class="guide-thumb" src="images/lonepine.svg" alt="Lone Pine banner"></a><a class="guide-link" href="lonepine.html">Lone Pine, CA — Activities Guide</a></li>
+                        <li><a href="mammothlakes.html"><img class="guide-thumb" src="images/mammothlakes.svg" alt="Mammoth Lakes banner"></a><a class="guide-link" href="mammothlakes.html">Mammoth Lakes, CA — Activities Guide</a></li>
+                        <li><a href="yosemite.html"><img class="guide-thumb" src="images/yosemite.svg" alt="Yosemite banner"></a><a class="guide-link" href="yosemite.html">Yosemite, CA — Activities Guide</a></li>
+                        <li><a href="junelakeloop.html"><img class="guide-thumb" src="images/junelakeloop.svg" alt="June Lake Loop banner"></a><a class="guide-link" href="junelakeloop.html">June Lake Loop, CA — Activities Guide</a></li>
+                        <li><a href="bishop.html"><img class="guide-thumb" src="images/bishop.svg" alt="Bishop banner"></a><a class="guide-link" href="bishop.html">Bishop, CA — Activities Guide</a></li>
+                        <li><a href="laketahoe.html"><img class="guide-thumb" src="images/laketahoe.svg" alt="Lake Tahoe banner"></a><a class="guide-link" href="laketahoe.html">Lake Tahoe, CA/NV — Activities Guide</a></li>
+                        <li><a href="alpinelake.html"><img class="guide-thumb" src="images/alpinelake.svg" alt="Alpine Lake banner"></a><a class="guide-link" href="alpinelake.html">Alpine Lake (Hwy 4), CA — Activities Guide</a></li>
+                        <li><a href="sacramento.html"><img class="guide-thumb" src="images/sacramento.svg" alt="Sacramento banner"></a><a class="guide-link" href="sacramento.html">Sacramento, CA — Activities Guide</a></li>
+                        <li><a href="mtshasta.html"><img class="guide-thumb" src="images/mtshasta.svg" alt="Mt. Shasta banner"></a><a class="guide-link" href="mtshasta.html">Mt. Shasta, CA — Activities Guide</a></li>
+                        <li><a href="lasvegas.html"><img class="guide-thumb" src="images/lasvegas.svg" alt="Las Vegas banner"></a><a class="guide-link" href="lasvegas.html">Las Vegas, NV — Activities Guide</a></li>
+                        <li><a href="losangeles.html"><img class="guide-thumb" src="images/losangeles.svg" alt="Los Angeles banner"></a><a class="guide-link" href="losangeles.html">Los Angeles, CA — Activities Guide</a></li>
+                        <li><a href="pointreyes.html"><img class="guide-thumb" src="images/pointreyes.svg" alt="Point Reyes banner"></a><a class="guide-link" href="pointreyes.html">Point Reyes, CA — Activities Guide</a></li>
+                        <li><a href="fortbragg.html"><img class="guide-thumb" src="images/fortbragg.svg" alt="Fort Bragg banner"></a><a class="guide-link" href="fortbragg.html">Fort Bragg, CA — Activities Guide</a></li>
+                        <li><a href="avenueofthegiants.html"><img class="guide-thumb" src="images/avenueofthegiants.svg" alt="Avenue of the Giants banner"></a><a class="guide-link" href="avenueofthegiants.html">Avenue of the Giants, CA — Activities Guide</a></li>
+                        <li><a href="sequoia.html"><img class="guide-thumb" src="images/sequoia.svg" alt="Sequoia National Park banner"></a><a class="guide-link" href="sequoia.html">Sequoia National Park, CA — Activities Guide</a></li>
                     </ul>
                 </details>
 
-                <details id="indiaDetails" style="margin-bottom:25px; border:1px solid #ddd; border-radius:8px; padding:15px;">
-                    <summary style="cursor:pointer; font-weight:700; font-size:1.2em; color:#2c3e50; margin-bottom:15px;">🇮🇳 India (5 locations)</summary>
+                <details id="indiaDetails" class="country-dropdown">
+                    <summary class="country-summary">🇮🇳 India (5 locations)</summary>
                     <ul class="guide-list" style="list-style:none; padding:0; margin:0;">
-                        <li><img class="guide-thumb" src="images/bangalore.svg" alt="Bangalore banner"><a class="guide-link" href="bangalore.html">Bangalore, India — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/kakinada.svg" alt="Kakinada banner"><a class="guide-link" href="kakinada.html">Kakinada, India — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/hyderabad.svg" alt="Hyderabad banner"><a class="guide-link" href="hyderabad.html">Hyderabad, India — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/delhi.svg" alt="Delhi banner"><a class="guide-link" href="delhi.html">Delhi, India — Activities Guide</a></li>
-                        <li><img class="guide-thumb" src="images/vizag.svg" alt="Vizag banner"><a class="guide-link" href="vizag.html">Vizag, India — Activities Guide</a></li>
+                        <li><a href="bangalore.html"><img class="guide-thumb" src="images/bangalore.svg" alt="Bangalore banner"></a><a class="guide-link" href="bangalore.html">Bangalore, India — Activities Guide</a></li>
+                        <li><a href="kakinada.html"><img class="guide-thumb" src="images/kakinada.svg" alt="Kakinada banner"></a><a class="guide-link" href="kakinada.html">Kakinada, India — Activities Guide</a></li>
+                        <li><a href="hyderabad.html"><img class="guide-thumb" src="images/hyderabad.svg" alt="Hyderabad banner"></a><a class="guide-link" href="hyderabad.html">Hyderabad, India — Activities Guide</a></li>
+                        <li><a href="delhi.html"><img class="guide-thumb" src="images/delhi.svg" alt="Delhi banner"></a><a class="guide-link" href="delhi.html">Delhi, India — Activities Guide</a></li>
+                        <li><a href="vizag.html"><img class="guide-thumb" src="images/vizag.svg" alt="Vizag banner"></a><a class="guide-link" href="vizag.html">Vizag, India — Activities Guide</a></li>
                     </ul>
                 </details>
             </main>
@@ -76,25 +79,28 @@
         
         // City data with coordinates
         const cities = [
-            { name: 'Reno, NV', lat: 39.5296, lon: -119.8138, page: 'reno.html', color: '#ff4444' },
-            { name: 'Dublin, CA', lat: 37.7022, lon: -121.9358, page: 'dublin.html', color: '#ff6b6b' },
-            { name: 'Lone Pine, CA', lat: 36.6060, lon: -118.0634, page: 'lonepine.html', color: '#ff8787' },
-            { name: 'Mammoth Lakes, CA', lat: 37.6485, lon: -118.9721, page: 'mammothlakes.html', color: '#ff9a9a' },
-            { name: 'Yosemite, CA', lat: 37.8651, lon: -119.5383, page: 'yosemite.html', color: '#ffadad' },
-            { name: 'June Lake Loop, CA', lat: 37.7806, lon: -119.0757, page: 'junelakeloop.html', color: '#ffc0c0' },
-            { name: 'Bishop, CA', lat: 37.3636, lon: -118.3951, page: 'bishop.html', color: '#ffd3d3' },
-            { name: 'Lake Tahoe, CA/NV', lat: 39.0968, lon: -120.0324, page: 'laketahoe.html', color: '#ffe0e0' },
-            { name: 'Alpine Lake (Hwy 4), CA', lat: 38.4694, lon: -120.0106, page: 'alpinelake.html', color: '#fff0f0' },
-            { name: 'Sacramento, CA', lat: 38.5816, lon: -121.4944, page: 'sacramento.html', color: '#fff6e0' },
-            { name: 'Mt. Shasta, CA', lat: 41.3099, lon: -122.3106, page: 'mtshasta.html', color: '#e6f7ff' },
-            { name: 'Las Vegas, NV', lat: 36.1699, lon: -115.1398, page: 'lasvegas.html', color: '#ffe8ff' },
-            { name: 'Los Angeles, CA', lat: 34.0522, lon: -118.2437, page: 'losangeles.html', color: '#ffdfe6' },
-            { name: 'Point Reyes, CA', lat: 38.0692, lon: -122.9381, page: 'pointreyes.html', color: '#e0fff4' },
-            { name: 'Delhi, India', lat: 28.7041, lon: 77.1025, page: 'delhi.html', color: '#4444ff' },
-            { name: 'Hyderabad, India', lat: 17.3850, lon: 78.4867, page: 'hyderabad.html', color: '#6b6bff' },
-            { name: 'Bangalore, India', lat: 12.9716, lon: 77.5946, page: 'bangalore.html', color: '#8787ff' },
-            { name: 'Kakinada, India', lat: 16.9891, lon: 82.2475, page: 'kakinada.html', color: '#a3a3ff' },
-            { name: 'Vizag, India', lat: 17.6868, lon: 83.2185, page: 'vizag.html', color: '#bfbfff' }
+            { name: 'Reno, NV', lat: 39.5296, lon: -119.8138, page: 'reno.html', color: '#ff0000' },
+            { name: 'Dublin, CA', lat: 37.7022, lon: -121.9358, page: 'dublin.html', color: '#ff3333' },
+            { name: 'Lone Pine, CA', lat: 36.6060, lon: -118.0634, page: 'lonepine.html', color: '#ff4444' },
+            { name: 'Mammoth Lakes, CA', lat: 37.6485, lon: -118.9721, page: 'mammothlakes.html', color: '#ff5555' },
+            { name: 'Yosemite, CA', lat: 37.8651, lon: -119.5383, page: 'yosemite.html', color: '#ff6666' },
+            { name: 'June Lake Loop, CA', lat: 37.7806, lon: -119.0757, page: 'junelakeloop.html', color: '#ff7777' },
+            { name: 'Bishop, CA', lat: 37.3636, lon: -118.3951, page: 'bishop.html', color: '#ff8800' },
+            { name: 'Lake Tahoe, CA/NV', lat: 39.0968, lon: -120.0324, page: 'laketahoe.html', color: '#ff9900' },
+            { name: 'Alpine Lake (Hwy 4), CA', lat: 38.4694, lon: -120.0106, page: 'alpinelake.html', color: '#ffaa00' },
+            { name: 'Sacramento, CA', lat: 38.5816, lon: -121.4944, page: 'sacramento.html', color: '#ffbb00' },
+            { name: 'Mt. Shasta, CA', lat: 41.3099, lon: -122.3106, page: 'mtshasta.html', color: '#00ddff' },
+            { name: 'Las Vegas, NV', lat: 36.1699, lon: -115.1398, page: 'lasvegas.html', color: '#ff00ff' },
+            { name: 'Los Angeles, CA', lat: 34.0522, lon: -118.2437, page: 'losangeles.html', color: '#ff0088' },
+            { name: 'Point Reyes, CA', lat: 38.0692, lon: -122.9381, page: 'pointreyes.html', color: '#00ff88' },
+            { name: 'Fort Bragg, CA', lat: 39.4457, lon: -123.8053, page: 'fortbragg.html', color: '#00ccff' },
+            { name: 'Avenue of the Giants, CA', lat: 40.3521, lon: -123.9200, page: 'avenueofthegiants.html', color: '#22aa44' },
+            { name: 'Sequoia National Park, CA', lat: 36.4864, lon: -118.5658, page: 'sequoia.html', color: '#cc6600' },
+            { name: 'Delhi, India', lat: 28.7041, lon: 77.1025, page: 'delhi.html', color: '#0000ff' },
+            { name: 'Hyderabad, India', lat: 17.3850, lon: 78.4867, page: 'hyderabad.html', color: '#3333ff' },
+            { name: 'Bangalore, India', lat: 12.9716, lon: 77.5946, page: 'bangalore.html', color: '#4444ff' },
+            { name: 'Kakinada, India', lat: 16.9891, lon: 82.2475, page: 'kakinada.html', color: '#5555ff' },
+            { name: 'Vizag, India', lat: 17.6868, lon: 83.2185, page: 'vizag.html', color: '#6666ff' }
         ];
         
         // Store markers with tooltips
@@ -103,12 +109,12 @@
         // Add markers for each city
         cities.forEach(city => {
             const marker = L.circleMarker([city.lat, city.lon], {
-                radius: 10,
+                radius: 7,
                 fillColor: city.color,
-                color: '#fff',
+                color: '#ffffff',
                 weight: 2,
-                opacity: 1,
-                fillOpacity: 0.8
+                opacity: 0.8,
+                fillOpacity: 0.9
             }).addTo(map);
             
             // Create tooltip for each marker
@@ -128,15 +134,17 @@
             
             marker.on('mouseover', function() {
                 this.setStyle({
-                    radius: 12,
-                    fillColor: '#ffd700'
+                    radius: 10,
+                    fillColor: '#ffd700',
+                    weight: 4
                 });
             });
             
             marker.on('mouseout', function() {
                 this.setStyle({
-                    radius: 10,
-                    fillColor: city.color
+                    radius: 7,
+                    fillColor: city.color,
+                    weight: 3
                 });
             });
             

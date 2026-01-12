@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320">
+  <defs>
+    <linearGradient id="sequoiaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b4513;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d2691e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="320" fill="url(#sequoiaGradient)"/>
+  
+  <!-- Giant sequoia silhouettes -->
+  <rect x="100" y="60" width="50" height="220" fill="rgba(101,67,33,0.6)" rx="8"/>
+  <ellipse cx="125" cy="55" rx="35" ry="25" fill="rgba(34,139,34,0.5)"/>
+  <ellipse cx="125" cy="75" rx="40" ry="30" fill="rgba(34,139,34,0.6)"/>
+  
+  <rect x="250" y="80" width="45" height="200" fill="rgba(101,67,33,0.6)" rx="7"/>
+  <ellipse cx="272" cy="75" rx="32" ry="22" fill="rgba(34,139,34,0.5)"/>
+  <ellipse cx="272" cy="93" rx="37" ry="28" fill="rgba(34,139,34,0.6)"/>
+  
+  <rect x="950" y="70" width="55" height="210" fill="rgba(101,67,33,0.6)" rx="9"/>
+  <ellipse cx="977" cy="65" rx="38" ry="27" fill="rgba(34,139,34,0.5)"/>
+  <ellipse cx="977" cy="85" rx="43" ry="32" fill="rgba(34,139,34,0.6)"/>
+  
+  <rect x="1080" y="90" width="48" height="190" fill="rgba(101,67,33,0.6)" rx="7"/>
+  <ellipse cx="1104" cy="85" rx="34" ry="24" fill="rgba(34,139,34,0.5)"/>
+  <ellipse cx="1104" cy="103" rx="39" ry="29" fill="rgba(34,139,34,0.6)"/>
+  
+  <!-- Badge -->
+  <circle cx="600" cy="140" r="90" fill="white" opacity="0.95"/>
+  
+  <!-- Text -->
+  <text x="600" y="175" font-family="Arial, sans-serif" font-size="70" font-weight="bold" 
+        text-anchor="middle" fill="#8b4513">SQ</text>
+</svg>

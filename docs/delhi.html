@@ -94,17 +94,18 @@
             const searchText = `${a['Activity Name']} ${a.Category} ${a.Location} ${a.Description}`.toLowerCase();
             const shareText = `${a.Date} - ${a['Activity Name']}\nLocation: ${a.Location}\nPhone: ${a['Phone Number']}\nWebsite: ${a.Website}\n\n${a.Description}\nBest Season: ${a['Best Season']}`;
             const shareUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText);
+            const websiteUrl = a.Website ? (a.Website.startsWith('http') ? a.Website : 'https://' + a.Website) : '#';
             return `
-                <div class="activity-card animate-in" data-search="${searchText}" data-category="${a.Category}" data-season="${a['Best Season']}">
+                <div class="activity-card animate-in" data-search="${searchText}" data-category="${a.Category}" data-season="${a['Best Season']}" onclick="window.open('${websiteUrl}', '_blank')" style="cursor:pointer;">
                     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <div style="min-width:60%"><div style="font-weight:700">${a['Activity Name']}</div><div style="color:#666; font-size:0.95em;">${a.Location}</div></div>
                         <div style="text-align:right">
                             <div><span class="category-badge">${a.Category}</span><span class="season-badge">${a['Best Season']}</span></div>
-                            <div style="margin-top:8px; font-size:0.9em"><a href="tel:${a['Phone Number']}">${a['Phone Number']}</a> • <a href="http://${a.Website}" target="_blank">Website</a></div>
+                            <div style="margin-top:8px; font-size:0.9em"><a href="tel:${a['Phone Number']}" onclick="event.stopPropagation()">${a['Phone Number']}</a> • <a href="${websiteUrl}" target="_blank" onclick="event.stopPropagation()">Website</a></div>
                         </div>
                     </div>
                     <div style="margin-top:10px; color:#333">${a.Description}</div>
-                    <div style="margin-top:10px; display:flex; justify-content:flex-end;"><a class="share-btn" href="${shareUrl}" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a></div>
+                    <div style="margin-top:10px; display:flex; justify-content:flex-end;"><a class="share-btn" href="${shareUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Share on WhatsApp</a></div>
                 </div>
             `;
         }

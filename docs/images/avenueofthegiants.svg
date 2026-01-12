@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320">
+  <defs>
+    <linearGradient id="avenueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#228b22;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#90ee90;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="320" fill="url(#avenueGradient)"/>
+  
+  <!-- Redwood trees -->
+  <rect x="150" y="80" width="30" height="160" fill="rgba(139,69,19,0.5)" rx="5"/>
+  <polygon points="165,80 140,120 190,120" fill="rgba(34,139,34,0.6)"/>
+  <polygon points="165,50 145,90 185,90" fill="rgba(34,139,34,0.7)"/>
+  <polygon points="165,30 150,65 180,65" fill="rgba(34,139,34,0.8)"/>
+  
+  <rect x="900" y="100" width="35" height="180" fill="rgba(139,69,19,0.5)" rx="5"/>
+  <polygon points="917,100 885,145 949,145" fill="rgba(34,139,34,0.6)"/>
+  <polygon points="917,65 890,110 944,110" fill="rgba(34,139,34,0.7)"/>
+  <polygon points="917,40 895,80 939,80" fill="rgba(34,139,34,0.8)"/>
+  
+  <rect x="1050" y="90" width="28" height="150" fill="rgba(139,69,19,0.5)" rx="5"/>
+  <polygon points="1064,90 1040,130 1088,130" fill="rgba(34,139,34,0.6)"/>
+  <polygon points="1064,60 1045,95 1083,95" fill="rgba(34,139,34,0.7)"/>
+  
+  <!-- Badge -->
+  <circle cx="600" cy="140" r="90" fill="white" opacity="0.95"/>
+  
+  <!-- Text -->
+  <text x="600" y="175" font-family="Arial, sans-serif" font-size="70" font-weight="bold" 
+        text-anchor="middle" fill="#228b22">AG</text>
+</svg>

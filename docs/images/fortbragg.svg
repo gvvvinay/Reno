@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320">
+  <defs>
+    <linearGradient id="fortbraggGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e90ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#87ceeb;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="320" fill="url(#fortbraggGradient)"/>
+  
+  <!-- Wave pattern for coastal theme -->
+  <path d="M0 200 Q 150 180 300 200 T 600 200 T 900 200 T 1200 200 L 1200 320 L 0 320 Z" 
+        fill="rgba(255,255,255,0.2)"/>
+  <path d="M0 220 Q 150 200 300 220 T 600 220 T 900 220 T 1200 220 L 1200 320 L 0 320 Z" 
+        fill="rgba(255,255,255,0.15)"/>
+  
+  <!-- Glass beach glass pieces -->
+  <circle cx="200" cy="100" r="8" fill="rgba(0,255,100,0.6)"/>
+  <circle cx="350" cy="140" r="6" fill="rgba(255,100,0,0.6)"/>
+  <circle cx="850" cy="120" r="7" fill="rgba(100,150,255,0.6)"/>
+  <circle cx="1000" cy="90" r="9" fill="rgba(255,200,0,0.6)"/>
+  
+  <!-- Badge -->
+  <circle cx="600" cy="140" r="90" fill="white" opacity="0.95"/>
+  
+  <!-- Text -->
+  <text x="600" y="175" font-family="Arial, sans-serif" font-size="70" font-weight="bold" 
+        text-anchor="middle" fill="#1e90ff">FB</text>
+</svg>
