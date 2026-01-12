@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avenue of the Giants Outdoor Activities</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Avenue of the Giants Outdoor Activities</h1>
+        <nav>
+            <a href="index.html">← Back to Index</a>
+        </nav>
+    </header>
+
+    <main>
+        <div id="loading">Loading activities...</div>
+        <div id="error" style="display: none;"></div>
+        
+        <div id="stats-container" style="display: none;"></div>
+        
+        <div id="search-container" style="display: none;">
+            <input type="text" id="search-box" placeholder="Search activities...">
+        </div>
+        
+        <div id="filter-container" style="display: none;">
+            <div class="filter-group">
+                <label>Category:</label>
+                <div id="category-filters"></div>
+            </div>
+            <div class="filter-group">
+                <label>Season:</label>
+                <div id="season-filters"></div>
+            </div>
+        </div>
+        
+        <div id="activities-container"></div>
+    </main>
+
+    <script>
+        let allActivities = [];
+        let activeFilters = {
+            category: 'All',
+            season: 'All',
+            searchTerm: ''
+        };
+
+        async function loadActivities() {
+            try {
+                const response = await fetch('avenueofthegiants_outdoor_activities.csv');
+                if (!response.ok) throw new Error('Failed to load activities');
+                
+                const csvText = await response.text();
+                allActivities = parseCSV(csvText);
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('stats-container').style.display = 'block';
+                document.getElementById('search-container').style.display = 'block';
+                document.getElementById('filter-container').style.display = 'block';
+                
+                renderStats();
+                renderFilters();
+                renderActivities(allActivities);
+                
+                document.getElementById('search-box').addEventListener('input', (e) => {
+                    activeFilters.searchTerm = e.target.value.toLowerCase();
+                    filterActivities();
+                });
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').textContent = 'Error loading activities. Please try again later.';
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\n');
+            const headers = lines[0].split(',');
+            
+            return lines.slice(1).map(line => {
+                const values = line.split(',');
+                return {
+                    date: values[0],
+                    name: values[1],
+                    category: values[2],
+                    location: values[3],
+                    phone: values[4],
+                    website: values[5],
+                    description: values[6],
+                    season: values[7]
+                };
+            });
+        }
+
+        function renderStats() {
+            const categories = [...new Set(allActivities.map(a => a.category))];
+            const seasons = [...new Set(allActivities.map(a => a.season))];
+            
+            document.getElementById('stats-container').innerHTML = `
+                <div class="stats">
+                    <div class="stat-item">
+                        <strong>${allActivities.length}</strong>
+                        <span>Total Activities</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>${categories.length}</strong>
+                        <span>Categories</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>${seasons.length}</strong>
+                        <span>Seasons</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderFilters() {
+            const categories = ['All', ...new Set(allActivities.map(a => a.category))];
+            const seasons = ['All', ...new Set(allActivities.map(a => a.season))];
+            
+            document.getElementById('category-filters').innerHTML = categories.map(cat => 
+                `<button class="filter-btn ${cat === 'All' ? 'active' : ''}" 
+                        onclick="filterByCategory('${cat}')">${cat}</button>`
+            ).join('');
+            
+            document.getElementById('season-filters').innerHTML = seasons.map(season => 
+                `<button class="filter-btn ${season === 'All' ? 'active' : ''}" 
+                        onclick="filterBySeason('${season}')">${season}</button>`
+            ).join('');
+        }
+
+        function filterByCategory(category) {
+            activeFilters.category = category;
+            document.querySelectorAll('#category-filters .filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent === category);
+            });
+            filterActivities();
+        }
+
+        function filterBySeason(season) {
+            activeFilters.season = season;
+            document.querySelectorAll('#season-filters .filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent === season);
+            });
+            filterActivities();
+        }
+
+        function filterActivities() {
+            let filtered = allActivities;
+            
+            if (activeFilters.category !== 'All') {
+                filtered = filtered.filter(a => a.category === activeFilters.category);
+            }
+            
+            if (activeFilters.season !== 'All') {
+                filtered = filtered.filter(a => a.season === activeFilters.season);
+            }
+            
+            if (activeFilters.searchTerm) {
+                filtered = filtered.filter(a => 
+                    a.name.toLowerCase().includes(activeFilters.searchTerm) ||
+                    a.description.toLowerCase().includes(activeFilters.searchTerm) ||
+                    a.location.toLowerCase().includes(activeFilters.searchTerm)
+                );
+            }
+            
+            renderActivities(filtered);
+        }
+
+        function renderActivities(activities) {
+            const container = document.getElementById('activities-container');
+            
+            if (activities.length === 0) {
+                container.innerHTML = '<p class="no-results">No activities found matching your criteria.</p>';
+                return;
+            }
+            
+            container.innerHTML = activities.map(activity => {
+                const websiteUrl = activity.website ? (activity.website.startsWith('http') ? activity.website : 'https://' + activity.website) : '#';
+                return `
+                <div class="activity-card" onclick="window.open('${websiteUrl}', '_blank')" style="cursor:pointer;">
+                    <div class="activity-header">
+                        <h3>${activity.name}</h3>
+                        <span class="category-badge">${activity.category}</span>
+                    </div>
+                    <p class="activity-description">${activity.description}</p>
+                    <div class="activity-details">
+                        <div class="detail-item">
+                            <strong>📍 Location:</strong> ${activity.location}
+                        </div>
+                        <div class="detail-item">
+                            <strong>📅 Date:</strong> ${activity.date}
+                        </div>
+                        <div class="detail-item">
+                            <strong>🌤️ Best Season:</strong> ${activity.season}
+                        </div>
+                        ${activity.phone ? `<div class="detail-item"><strong>📞 Phone:</strong> <a href="tel:${activity.phone}" onclick="event.stopPropagation()">${activity.phone}</a></div>` : ''}
+                        ${activity.website ? `<div class="detail-item"><strong>🌐 Website:</strong> <a href="${websiteUrl}" target="_blank" onclick="event.stopPropagation()">${activity.website}</a></div>` : ''}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        loadActivities();
+    </script>
+</body>
+</html>
