@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dublin, CA Outdoor Activities Guide</title>
+    <title>Delhi, India Outdoor Activities Guide</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📍 Dublin, CA Outdoor Activities Guide</h1>
-            <p>Explore outdoor activities around Dublin, California — Spring 2026</p>
+            <h1>📍 Delhi, India Outdoor Activities Guide</h1>
+            <p>Explore outdoor activities around Delhi — 2026</p>
             <p><a class="back-link" href="index.html">← Back to Index</a></p>
         </header>
 
         <div class="page-banner">
-            <img src="images/dublin.svg" alt="Dublin banner">
+            <img src="images/delhi.svg" alt="Delhi banner">
         </div>
 
         <div class="content">
         <div class="loading" id="loadingMessage">Loading activities data...</div>
         <div class="error" id="errorMessage" style="display:none;"></div>
         <div id="fileLoader" style="display:none; text-align:center; padding:10px;">
-            <p style="color:#666">If automatic loading fails, select the CSV file manually:</p>
+            <p style="color:#666">If automatic loading fails, select the CSV file manually below:</p>
             <input type="file" id="csvFileInput" accept=".csv" />
         </div>
 
@@ -37,7 +37,7 @@
 
         </div>
         <footer style="text-align:center; margin-top:20px; color:#666">
-            <p>© 2026 Dublin Outdoor Activities Guide</p>
+            <p>© 2026 Delhi Outdoor Activities Guide</p>
         </footer>
     </div>
 
@@ -47,7 +47,7 @@
 
         async function loadCSV() {
             try {
-                const csvPath = 'dublin_outdoor_activities.csv';
+                const csvPath = 'delhi_outdoor_activities.csv';
                 const response = await fetch(csvPath);
                 if (!response.ok) throw new Error('Could not load CSV');
                 const csvText = await response.text();
@@ -67,6 +67,7 @@
             }
         }
 
+        // reuse same CSV parsing and rendering code as other pages
         function parseCSV(csv) {
             const lines = csv.trim().split('\n').filter(l => l.trim() !== '');
             if (lines.length === 0) return [];
@@ -141,30 +142,10 @@
             const seasons = [...new Set(activitiesData.map(a => a['Best Season']))].sort();
             document.getElementById('categoryFilters').innerHTML = `<button class="filter-btn active" onclick="filterByCategory('all', this)">All Categories</button>` + categories.map(c=>`<button class="filter-btn" onclick="filterByCategory('${c}', this)">${c}</button>`).join('');
             document.getElementById('seasonFilters').innerHTML = `<button class="filter-btn active" onclick="filterBySeason('all', this)">All Seasons</button>` + seasons.map(s=>`<button class="filter-btn" onclick="filterBySeason('${s}', this)">${s}</button>`).join('');
-
-            // animate buttons in with a small stagger
             const catBtns = document.querySelectorAll('#categoryFilters .filter-btn');
             catBtns.forEach((b,i)=>{ b.classList.remove('animate-in'); setTimeout(()=>b.classList.add('animate-in'), i*60); });
             const seasonBtns = document.querySelectorAll('#seasonFilters .filter-btn');
             seasonBtns.forEach((b,i)=>{ b.classList.remove('animate-in'); setTimeout(()=>b.classList.add('animate-in'), (catBtns.length*60) + i*60); });
-        }
-
-        function filterByCategory(category, btn) {
-            const buttons = document.querySelectorAll('#categoryFilters .filter-btn');
-            buttons.forEach(b=>b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-            if (category === 'all') filteredData = activitiesData; else filteredData = activitiesData.filter(a=>a.Category===category);
-            renderActivities();
-            document.getElementById('searchBox').value='';
-        }
-
-        function filterBySeason(season, btn) {
-            const buttons = document.querySelectorAll('#seasonFilters .filter-btn');
-            buttons.forEach(b=>b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-            if (season === 'all') filteredData = activitiesData; else filteredData = activitiesData.filter(a=>a['Best Season']===season);
-            renderActivities();
-            document.getElementById('searchBox').value='';
         }
 
         function renderActivities(){
@@ -180,7 +161,6 @@
             document.getElementById('noResults').style.display = visible===0 ? 'block':'none';
         }
 
-        // file input fallback
         document.getElementById('csvFileInput').addEventListener('change', function(e){ const f = e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=function(ev){ activitiesData=parseCSV(ev.target.result); filteredData=activitiesData; document.getElementById('errorMessage').style.display='none'; document.getElementById('fileLoader').style.display='none'; document.getElementById('cards').style.display='block'; renderActivities(); }; r.readAsText(f); });
 
         window.addEventListener('DOMContentLoaded', loadCSV);
