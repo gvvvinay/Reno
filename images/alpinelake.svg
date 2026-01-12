@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320">
+  <defs>
+    <linearGradient id="al-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4ac29a"/>
+      <stop offset="1" stop-color="#bdfff3"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#al-bg)"/>
+  <circle cx="600" cy="160" r="90" fill="#fff" opacity="0.95"/>
+  <path d="M535 205 L570 145 L600 180 L630 135 L665 205 Z" fill="none" stroke="#4ac29a" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M560 205 Q600 190 640 205" fill="none" stroke="#2f9e81" stroke-width="6" stroke-linecap="round"/>
+  <text x="600" y="175" font-family="Arial,sans-serif" font-size="54" font-weight="bold" fill="#2f9e81" text-anchor="middle">AL</text>
+  <text x="600" y="270" font-family="Arial,sans-serif" font-size="32" font-weight="600" fill="#fff" text-anchor="middle">Alpine Lake (Hwy 4), CA</text>
+</svg>
